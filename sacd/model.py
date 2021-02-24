@@ -95,6 +95,10 @@ class TwinnedQNetwork(BaseNetwork):
         q2 = self.Q2(states)
         return q1, q2
 
+    def my_load_state_dict(self, path_model):
+        self.load_state_dict(torch.load(path_model))
+        self.eval()
+
 
 class CateoricalPolicy(BaseNetwork):
 
@@ -132,3 +136,7 @@ class CateoricalPolicy(BaseNetwork):
         log_action_probs = torch.log(action_probs + z)
 
         return actions, action_probs, log_action_probs
+
+    def my_load_state_dict(self, path_model):
+        self.load_state_dict(torch.load(path_model))
+        self.eval()

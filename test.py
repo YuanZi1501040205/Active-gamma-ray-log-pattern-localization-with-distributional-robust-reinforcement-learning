@@ -14,16 +14,19 @@ def run(args):
 
     time = datetime.now().strftime("%Y%m%d-%H%M")
     log_dir = os.path.join(
-        'logs', 'GammaRay', f'{name}-seed{0}-{time}')
+        'logs', 'GammaRay-test')
 
     # Create the agent.
     Agent = SacdAgent
     agent = Agent(
         env=test_env, test_env=test_env, log_dir=log_dir,
         **config)
+    agent.policy.my_load_state_dict('./logs/GammaRay/sacd-seed0-20210224-0406/model/best/policy.pth')
 
     total_return = 0
     num_episodes = 0
+    average_episode_length = 0
+    num_success = 0
     for i in range(config['num_steps']):
         episode_return = 0.
         episode_steps = 0
@@ -59,7 +62,7 @@ def run(args):
 
 if __name__ == '__main__':
 
-    num_steps = [300]
+    num_steps = [3]
     batch_size = [8]
     lr = [0.0005]
     gamma = [0.7]
@@ -84,14 +87,7 @@ if __name__ == '__main__':
                                              'num_eval_steps': 300, 'max_episode_steps': 27000,
                                              'log_interval': 10, 'eval_interval': 5000, 'seed':0
                                              ,'cuda': True}
-                                    score, log_name = run(args)
-                                    if score > best_score:
-                                        best_score = score
-                                        f = open("sota.txt", "a")
-                                        f.write(log_name + ' ')
-                                        f.write(str(best_score) + '\n')
-                                        f.write(str(args) + '\n')
-                                        f.close()
+                                    run(args)
 
 
 

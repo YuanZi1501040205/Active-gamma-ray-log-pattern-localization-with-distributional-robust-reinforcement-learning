@@ -8,6 +8,8 @@ def plot_state(well_name, well, target, window, step):
     """well: [3, 9000] stores reference and target signal vectors and matching labels
        target: [target  x left, target x right] target signal fragment
        window: [window x left, window x right] current observation bbox"""
+
+    plt.style.use('default')
     plt.rcParams['font.sans-serif'] = ['Arial']  # 如果要显示中文字体,则在此处设为：SimHei
     plt.rcParams['axes.unicode_minus'] = False  # 显示负号
 
@@ -70,12 +72,18 @@ def plot_state(well_name, well, target, window, step):
 
     figure_file = './logs/'  + well_name + '_' + title
     plt.savefig(figure_file + '.png')
-    plt.cla()
     plt.close('all')
+    plt.cla()
+    plt.clf()
 
     img = cv2.imread(figure_file + '.png')
     os.remove(figure_file + '.png')
 
+    plot_bbx(bbx_xy, bbx_width, x_axis, well, gt_bbx_xy, gt_bbx_width, well_name, title)
+
+    return img
+
+def plot_bbx(bbx_xy, bbx_width, x_axis, well, gt_bbx_xy, gt_bbx_width, well_name, title):
     # plot bbx
     plt.style.use('dark_background')
     plt.figure(figsize=(5, 5))
@@ -90,12 +98,11 @@ def plot_state(well_name, well, target, window, step):
         plt.plot(x_axis[gt_bbx_l: gt_bbx_r], well[0][gt_bbx_l: gt_bbx_r], color='greenyellow', linewidth=1.5)
 
     plt.axis('off')
-    figure_file = './tmp/'  + well_name + '_' + title
+    figure_file = './tmp/' + well_name + '_' + title
     plt.savefig(figure_file + '.eps', format='eps', dpi=300)
     plt.close('all')
-
-    return img
-
+    plt.cla()
+    plt.clf()
 
 def iou(window1, window2):
     """intersection of window1 and window2 / union of window 1 and window 2
