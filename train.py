@@ -28,14 +28,14 @@ def run(args):
 
 if __name__ == '__main__':
 
-    num_steps = [40000]
+    num_steps = [36000]
     batch_size = [8]
     lr = [0.0005]
-    gamma = [0.7]
+    gamma = [0.65]
     multi_step = [3]
     start_steps = [0]
-    update_interval = [4]
-    target_update_interval = [40000]
+    update_interval = [8]
+    target_update_interval = [36000]
 
     best_score = -float('inf')
     for n_s in num_steps:
@@ -51,7 +51,7 @@ if __name__ == '__main__':
                                              'target_entropy_ratio': 0.98, 'start_steps': s_s, 'update_interval': u_i,
                                              'target_update_interval': t_u_i, 'use_per': True, 'dueling_net': False,
                                              'num_eval_steps': 300, 'max_episode_steps': 27000,
-                                             'log_interval': 10, 'eval_interval': 5000, 'seed':0
+                                             'log_interval': 10, 'eval_interval': 6000, 'seed':0
                                              ,'cuda': True}
                                     score, log_name = run(args)
                                     if score > best_score:

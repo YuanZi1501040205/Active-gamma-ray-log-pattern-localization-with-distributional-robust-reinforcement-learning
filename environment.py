@@ -119,7 +119,7 @@ class Env():
             img = plot_state(self.well_name, well, target, window, step)
             self.video.append(img)
         else:
-            if self.info == 'find':
+            if self.info == 'find' or self.info == 'over step but find':
                 frameSize = (self.video[0].shape[1], self.video[0].shape[0])
                 video_file = 'tmp/video/' + self.well_name
                 out = cv2.VideoWriter(video_file + 'output_video.avi', cv2.VideoWriter_fourcc(*'XVID'), 1, frameSize, True)

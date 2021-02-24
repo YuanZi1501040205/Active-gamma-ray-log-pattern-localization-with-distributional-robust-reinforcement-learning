@@ -240,7 +240,7 @@ class BaseAgent(ABC):
             num_episodes += 1
             average_episode_length = episode_steps + average_episode_length
             total_return += episode_return
-            print('num_steps:', num_steps)
+            print('num_test_episodes:', num_episodes)
             print('self.num_eval_steps:', self.num_eval_steps)
 
             if info == 'find' or info == 'over step but find':
